@@ -16,9 +16,13 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet var topText: UITextField!
     @IBOutlet var bottomText: UITextField!
     
+    let imageCameraPicker = UIImagePickerController()
+    let imageAlbumPicker = UIImagePickerController()
+    
     var memedImage: UIImage!
     
-    @IBOutlet var toolBar: UIToolbar!
+    var cameraBarButton: UIBarButtonItem!
+    var albumBarButton: UIBarButtonItem!
     
     struct Meme {
         var topText: String
@@ -30,7 +34,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+        cameraBarButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
         subscribeToKeyboardNotifications()
         
         topText.text = "TOP"
@@ -48,6 +52,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareMeme))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelMeme))
         
+        // Show navigation controller’s built-in toolbar
+        navigationController?.setToolbarHidden(false, animated: false)
+
+        // Set the view controller toolbar items
+        let flexibleSpace1 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        self.cameraBarButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.camera, target: self, action: #selector(pickImageFromCamera))
+        self.albumBarButton = UIBarButtonItem(title: "Album", style: .plain, target: self, action: #selector(pickImageFromAlbum))
+        let flexibleSpace2 = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        let items = [flexibleSpace1, cameraBarButton, albumBarButton, flexibleSpace2]
+        setToolbarItems(items as? [UIBarButtonItem], animated: false)
+        
         topText.delegate = self
         bottomText.delegate = self
         
@@ -64,8 +79,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @objc func shareMeme() {
-        let image = generateMemedImage()
-        let activityItem: [AnyObject] = [image as AnyObject]
+        let memedImage = generateMemedImage()
+//        let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
+        let activityItem: [AnyObject] = [memedImage as AnyObject]
         let controller = UIActivityViewController(activityItems: activityItem as [AnyObject], applicationActivities: nil)
         self.present(controller, animated: true, completion: nil)
     }
@@ -74,18 +90,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
     }
 
-    @IBAction func pickImageFromAlbum(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        present(imagePicker, animated: true, completion: nil)
+    @objc func pickImageFromAlbum() {
+        imageCameraPicker.delegate = self
+        imageCameraPicker.sourceType = .photoLibrary
+        present(imageCameraPicker, animated: true, completion: nil)
     }
     
-    @IBAction func pickImageFromCamera(_ sender: Any) {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        present(imagePicker, animated: true, completion: nil)
+    @objc func pickImageFromCamera() {
+        imageAlbumPicker.delegate = self
+        imageAlbumPicker.sourceType = .camera
+        present(imageAlbumPicker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
@@ -137,15 +151,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(sender:)), name: UIResponder.keyboardWillHideNotification, object: nil);
     }
     
-    func save() {
-            // Create the meme
-            let meme = Meme(topText: topText.text!, bottomText: bottomText.text!, originalImage: imageView.image!, memedImage: memedImage)
-    }
-    
     func generateMemedImage() -> UIImage {
         
         self.navigationController?.isNavigationBarHidden = true
-        self.toolBar.isHidden = true
+        navigationController?.setToolbarHidden(true, animated: false)
 
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -154,7 +163,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsEndImageContext()
         
         self.navigationController?.isNavigationBarHidden = false
-        self.toolBar.isHidden = false
+        navigationController?.setToolbarHidden(false, animated: false)
 
         return memedImage
     }
