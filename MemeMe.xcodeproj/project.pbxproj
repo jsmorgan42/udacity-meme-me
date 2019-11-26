@@ -13,6 +13,7 @@
 		A9D92B5A238C974B0039352D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D92B58238C974B0039352D /* Main.storyboard */; };
 		A9D92B5C238C974B0039352D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9D92B5B238C974B0039352D /* Assets.xcassets */; };
 		A9D92B5F238C974B0039352D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9D92B5D238C974B0039352D /* LaunchScreen.storyboard */; };
+		A9D92B67238CB8160039352D /* MemeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D92B66238CB8160039352D /* MemeTextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		A9D92B5B238C974B0039352D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9D92B5E238C974B0039352D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A9D92B60238C974B0039352D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9D92B66238CB8160039352D /* MemeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeTextField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +61,7 @@
 				A9D92B52238C974B0039352D /* AppDelegate.swift */,
 				A9D92B54238C974B0039352D /* SceneDelegate.swift */,
 				A9D92B56238C974B0039352D /* ViewController.swift */,
+				A9D92B66238CB8160039352D /* MemeTextField.swift */,
 				A9D92B58238C974B0039352D /* Main.storyboard */,
 				A9D92B5B238C974B0039352D /* Assets.xcassets */,
 				A9D92B5D238C974B0039352D /* LaunchScreen.storyboard */,
@@ -140,6 +143,7 @@
 			files = (
 				A9D92B57238C974B0039352D /* ViewController.swift in Sources */,
 				A9D92B53238C974B0039352D /* AppDelegate.swift in Sources */,
+				A9D92B67238CB8160039352D /* MemeTextField.swift in Sources */,
 				A9D92B55238C974B0039352D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -287,6 +291,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RZF5Q9N5D5;
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -305,6 +310,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RZF5Q9N5D5;
 				INFOPLIST_FILE = MemeMe/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
